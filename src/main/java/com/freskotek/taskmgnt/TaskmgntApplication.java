@@ -15,20 +15,19 @@ public class TaskmgntApplication {
 		SpringApplication.run(TaskmgntApplication.class, args);
 	}
 
-//	@GetMapping("/{path:^(?!.*\\.).*$}/**")
-//	public String fallbackRoute(@PathVariable String path) {
-//		return "forward:/";
-//	}
+	@GetMapping("/workspace/{space_id}")
+	public String workspace(@PathVariable("space_id") String space_id) {
+		System.out.println("workspace route...");
+		return "forward:/";
+	}
 
-	@GetMapping("/{path:^(?!.\\.).$}/**")
+	@GetMapping("/{path:[^\\.]*}")
 	public String redirect() {
 		return "forward:/";
 	}
 
-//	@GetMapping("/{path:[^\\.]*}")
-//	public String redirect() {
-//		return "forward:/";
-//	}
+
+
 
 	// @GetMapping("/")
 	// public String apiRoot() {

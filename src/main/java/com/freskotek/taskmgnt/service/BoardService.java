@@ -35,6 +35,9 @@ public class BoardService {
     }
 
     public Board createBoard(Board board) {
+        if (board.getName() == null || board.getName().isEmpty()) {
+            throw new IllegalArgumentException("Board name is required");
+        }
         return boardRepository.save(board);
     }
 

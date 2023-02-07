@@ -40,6 +40,9 @@ public class BoardController {
 
     @PostMapping
     public ResponseEntity<Board> createBoard(@RequestBody Board board) {
+        if (board.getName() == null || board.getName().trim().isEmpty()) {
+            return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+        }
         return new ResponseEntity<Board>(boardService.createBoard(board), HttpStatus.CREATED);
     }
 
