@@ -23,7 +23,6 @@ public class TaskService {
         return taskRepository.findByUserId(userId, pageable);
     }
 
-
     public Task getTaskById(String id) {
         return taskRepository.findById(id).get();
     }

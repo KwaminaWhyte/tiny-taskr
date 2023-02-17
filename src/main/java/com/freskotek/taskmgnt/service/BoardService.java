@@ -5,18 +5,12 @@ import com.freskotek.taskmgnt.model.Task;
 import com.freskotek.taskmgnt.repository.BoardRepository;
 import com.mongodb.client.FindIterable;
 import com.mongodb.client.MongoCollection;
-import com.mongodb.client.model.Accumulators;
-import com.mongodb.client.model.Aggregates;
-import org.bson.BsonInt32;
 import org.bson.Document;
-import org.bson.conversions.Bson;
 import org.bson.types.ObjectId;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.mongodb.core.MongoTemplate;
 import org.springframework.stereotype.Service;
 
-//import javax.swing.text.Document;
-import java.time.LocalDateTime;
 import java.util.*;
 
 @Service

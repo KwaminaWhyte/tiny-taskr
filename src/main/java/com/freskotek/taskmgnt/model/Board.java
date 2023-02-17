@@ -24,11 +24,6 @@ public class Board {
     private String workspaceId;
     private List<Task> tasks;
 
-//    public void setTasks(List<Task> tasks) {
-//    }
-////    @DocumentReference
-//    private List<Task> taskIds;
-
     public void setTasks(List<Task> tasks) {
         this.tasks = tasks;
     }

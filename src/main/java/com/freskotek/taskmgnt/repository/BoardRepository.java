@@ -1,7 +1,6 @@
 package com.freskotek.taskmgnt.repository;
 
 import com.freskotek.taskmgnt.model.Board;
-import com.freskotek.taskmgnt.model.Task;
 import org.springframework.data.mongodb.repository.MongoRepository;
 import org.springframework.stereotype.Repository;
 

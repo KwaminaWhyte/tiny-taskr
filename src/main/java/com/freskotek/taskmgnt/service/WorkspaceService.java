@@ -1,6 +1,5 @@
 package com.freskotek.taskmgnt.service;
 
-import com.freskotek.taskmgnt.model.User;
 import com.freskotek.taskmgnt.model.Workspace;
 import com.freskotek.taskmgnt.repository.WorkspaceRepository;
 import org.springframework.beans.factory.annotation.Autowired;
