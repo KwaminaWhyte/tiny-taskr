@@ -75,6 +75,7 @@ public class UserService {
 
     public boolean register(String username, String email, String password) {
         User existingUser = userRepository.findByUsername(username);
+
         if (existingUser != null) {
             return false;
         }
@@ -82,6 +83,7 @@ public class UserService {
         if (existingUser != null) {
             return false;
         }
+
         String hashedPassword = BCrypt.hashpw(password, BCrypt.gensalt());
         User newUser = new User(username, email, hashedPassword);
         userRepository.save(newUser);

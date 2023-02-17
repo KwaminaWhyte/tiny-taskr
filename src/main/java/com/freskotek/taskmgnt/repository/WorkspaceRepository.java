@@ -9,5 +9,5 @@ import java.util.List;
 @Repository
 public interface WorkspaceRepository extends MongoRepository<Workspace, String> {
      List<Workspace> findByUserId(String userId);
-     List<Workspace> findByNameContainingIgnoreCase(String name);
+     List<Workspace> findByNameContainingIgnoreCaseAndUserId(String name, String userId);
 }

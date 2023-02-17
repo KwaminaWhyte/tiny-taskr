@@ -8,6 +8,5 @@ import java.util.List;
 
 public interface TaskRepository extends MongoRepository<Task, String> {
     List<Task> findByUserId(String userId, Pageable pageable);
-    List<Task> findByTitleContainingIgnoreCase(String name);
-
+    List<Task> findByTitleContainingIgnoreCaseAndUserId(String title, String userId);
 }

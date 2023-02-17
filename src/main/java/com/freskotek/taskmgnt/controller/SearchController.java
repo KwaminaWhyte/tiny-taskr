@@ -28,12 +28,13 @@ public class SearchController {
     @Autowired
     private final WorkspaceRepository workspaceRepository;
     @GetMapping
-    public ResponseEntity<List<SearchResult>> search(@RequestParam("query") String query) {
-        System.out.println(query);
+    public ResponseEntity<List<SearchResult>> search(@RequestParam("query") String query,
+                                                     @RequestParam("user_id") String userId) {
         List<SearchResult> results = new ArrayList<>();
 
         // Search for matching tasks
-        List<Task> tasks = taskRepository.findByTitleContainingIgnoreCase(query);
+        List<Task> tasks = taskRepository.findByTitleContainingIgnoreCaseAndUserId(query, userId);
+
         for (Task task : tasks) {
             SearchResult result = new SearchResult();
             result.setType("task");
@@ -44,7 +45,7 @@ public class SearchController {
         }
 
         // Search for matching boards
-        List<Board> boards = boardRepository.findByNameContainingIgnoreCase(query);
+        List<Board> boards = boardRepository.findByNameContainingIgnoreCaseAndUserId(query, userId);
         for (Board board : boards) {
             SearchResult result = new SearchResult();
             result.setType("board");
@@ -55,7 +56,7 @@ public class SearchController {
         }
 
         // Search for matching workspaces
-        List<Workspace> workspaces = workspaceRepository.findByNameContainingIgnoreCase(query);
+        List<Workspace> workspaces = workspaceRepository.findByNameContainingIgnoreCaseAndUserId(query, userId);
         for (Workspace workspace : workspaces) {
             SearchResult result = new SearchResult();
             result.setType("workspace");

@@ -21,7 +21,6 @@ public class TaskmgntApplication {
 	 */
 	@GetMapping("/workspace/{space_id}")
 	public String workspace(@PathVariable("space_id") String space_id) {
-		System.out.println("workspace route...");
 		return "forward:/";
 	}
 
