@@ -16,6 +16,7 @@ import org.springframework.data.mongodb.core.MongoTemplate;
 import org.springframework.stereotype.Service;
 
 //import javax.swing.text.Document;
+import java.time.LocalDateTime;
 import java.util.*;
 
 @Service
@@ -71,7 +72,7 @@ public class BoardService {
             t.setId(String.valueOf((ObjectId) task.get("_id")));
             t.setTitle((String) task.get("title"));
             t.setDescription((String) task.get("description"));
-            t.setDueDate((Date) task.get("dueDate"));
+            t.setDueDate((String) task.get("dueDate"));
             t.setBoardId((String) task.get("boardId"));
             t.setWorkspaceId((String) task.get("workspaceId"));
 

@@ -15,6 +15,10 @@ public class TaskmgntApplication {
 		SpringApplication.run(TaskmgntApplication.class, args);
 	}
 
+	/*
+	Defined this here to handle this route alone.
+	Any other route with a parameter will be defined like this
+	 */
 	@GetMapping("/workspace/{space_id}")
 	public String workspace(@PathVariable("space_id") String space_id) {
 		System.out.println("workspace route...");
@@ -25,9 +29,6 @@ public class TaskmgntApplication {
 	public String redirect() {
 		return "forward:/";
 	}
-
-
-
 
 	// @GetMapping("/")
 	// public String apiRoot() {

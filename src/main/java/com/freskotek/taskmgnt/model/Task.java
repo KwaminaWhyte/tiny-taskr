@@ -7,6 +7,7 @@ import org.bson.types.ObjectId;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
 
+import java.time.LocalDateTime;
 import java.util.Date;
 
 @Document(collection = "tasks")
@@ -21,5 +22,6 @@ public class Task {
     private String userId;
     private String boardId;
     private String workspaceId;
-    private Date dueDate;
+    private boolean done;
+    private String dueDate;
 }

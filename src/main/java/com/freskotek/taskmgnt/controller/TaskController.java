@@ -7,6 +7,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.time.LocalDateTime;
 import java.util.List;
 
 @RestController
@@ -18,7 +19,13 @@ public class TaskController {
 
     @GetMapping
     public ResponseEntity<List<Task>> getAllTasks() {
+        System.out.println(LocalDateTime.now());
         return new ResponseEntity<List<Task>>(taskService.allTasks(), HttpStatus.OK);
+    }
+
+    @GetMapping("/{user_id}/tasks")
+    public ResponseEntity<List<Task>> getAllUserTasks(@PathVariable("user_id") String userId) {
+        return new ResponseEntity<List<Task>>(taskService.allUserTasks(userId, 7), HttpStatus.OK);
     }
 
     @GetMapping("/{id}")

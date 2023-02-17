@@ -3,6 +3,8 @@ package com.freskotek.taskmgnt.service;
 import com.freskotek.taskmgnt.model.Task;
 import com.freskotek.taskmgnt.repository.TaskRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -15,6 +17,12 @@ public class TaskService {
     public List<Task> allTasks() {
         return taskRepository.findAll();
     }
+
+    public List<Task> allUserTasks(String userId, int limit) {
+        Pageable pageable = PageRequest.of(0, limit);
+        return taskRepository.findByUserId(userId, pageable);
+    }
+
 
     public Task getTaskById(String id) {
         return taskRepository.findById(id).get();
