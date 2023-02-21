@@ -45,7 +45,6 @@ public class UserController {
         String token = userService.generateToken(user.getUsername());
 
         return ResponseEntity.ok(new LoginResponse(token, currentUser));
-
     }
 
     @PostMapping("/register")

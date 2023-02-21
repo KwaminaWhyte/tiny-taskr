@@ -72,7 +72,8 @@ public class BoardService {
 
             List<Task> tasksForBoard = boardTasksMap.get(boardId);
             if (tasksForBoard == null) {
-                tasksForBoard = new ArrayList<>();
+                tasksForBoard = new ArrayList<Task>();
+//                tasksForBoard = new ArrayList<>();
                 boardTasksMap.put(boardId, tasksForBoard);
             }
             tasksForBoard.add(t);
