@@ -47,6 +47,9 @@ public class BoardController {
 
     @PutMapping("/{id}")
     public ResponseEntity<Board> updateBoard(@PathVariable("id") String id, @RequestBody Board board) {
+        System.out.println("editing...");
+        System.out.println(id);
+        System.out.println(board);
         return new ResponseEntity<Board>(boardService.updateBoard(id, board), HttpStatus.OK);
     }
 

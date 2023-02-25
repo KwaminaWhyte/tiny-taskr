@@ -30,9 +30,9 @@ public class BoardService {
     }
 
     public Board createBoard(Board board) {
-        if (board.getName() == null || board.getName().isEmpty()) {
-            throw new IllegalArgumentException("Board name is required");
-        }
+//        if (board.getName() == null || board.getName().isEmpty()) {
+//            throw new IllegalArgumentException("Board name is required");
+//        }
         return boardRepository.save(board);
     }
 
@@ -40,11 +40,17 @@ public class BoardService {
         return boardRepository.findByWorkspaceId(workspaceId);
     }
 
-    public Board updateBoard(String id, Board workspace) {
-        Board workspaceToUpdate = boardRepository.findById(id).get();
-        workspaceToUpdate.setName(workspace.getName());
-        workspaceToUpdate.setDescription(workspace.getDescription());
-        return boardRepository.save(workspaceToUpdate);
+    public Board updateBoard(String id, Board board) {
+        Optional<Board> boardToUpdateOptional = boardRepository.findById(id);
+//        if (boardToUpdateOptional.isPresent()) {
+            Board boardToUpdate = boardToUpdateOptional.get();
+            boardToUpdate.setName(board.getName());
+            boardToUpdate.setColor(board.getColor());
+            boardToUpdate.setDescription(board.getDescription());
+            return boardRepository.save(boardToUpdate);
+//        } else {
+            // handle board not found error
+//        }
     }
 
     public List<Board> getBoardsWithTasks(String workspaceId) {
