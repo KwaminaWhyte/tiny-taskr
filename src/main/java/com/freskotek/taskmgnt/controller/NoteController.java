@@ -1,9 +1,7 @@
 package com.freskotek.taskmgnt.controller;
 
 import com.freskotek.taskmgnt.model.Note;
-import com.freskotek.taskmgnt.model.Task;
 import com.freskotek.taskmgnt.service.NoteService;
-import com.freskotek.taskmgnt.service.TaskService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -20,15 +18,15 @@ public class NoteController {
     private NoteService noteService;
 
     @GetMapping
-    public ResponseEntity<List<Note>> getAllTasks() {
+    public ResponseEntity<List<Note>> getAllNotes() {
         System.out.println(LocalDateTime.now());
         return new ResponseEntity<List<Note>>(noteService.allNotes(), HttpStatus.OK);
     }
 
-//    @GetMapping("/{user_id}/tasks")
-//    public ResponseEntity<List<Task>> getAllUserTasks(@PathVariable("user_id") String userId) {
-//        return new ResponseEntity<List<Task>>(noteService.allNotes(userId, 7), HttpStatus.OK);
-//    }
+    @GetMapping("user/{user_id}")
+    public ResponseEntity<List<Note>> getAllUserNotes(@PathVariable("user_id") String user_id) {
+        return new ResponseEntity<List<Note>>(noteService.allUserNotes(user_id), HttpStatus.OK);
+    }
 
     @GetMapping("/{id}")
     public ResponseEntity<Note> getNoteById(@PathVariable("id") String id) {
@@ -36,8 +34,8 @@ public class NoteController {
     }
 
     @GetMapping("/workspace/{id}")
-    public ResponseEntity<Note> getNoteByWorkspaceId(@PathVariable("id") String id) {
-        return new ResponseEntity<Note>(noteService.getNoteByWorkspaceId(id), HttpStatus.OK);
+    public ResponseEntity<List<Note>> getNotesByWorkspaceId(@PathVariable("id") String id) {
+        return new ResponseEntity<List<Note>>(noteService.getNotesByWorkspaceId(id), HttpStatus.OK);
     }
 
     @PostMapping
@@ -45,20 +43,15 @@ public class NoteController {
         return new ResponseEntity<Note>(noteService.createNote(note), HttpStatus.CREATED);
     }
 
-
-//    @PutMapping("/move/{id}")
-//    public ResponseEntity<Task> moveTask(@PathVariable("id") String id, @RequestBody Task task) {
-//        return new ResponseEntity<Task>(noteService.moveTask(id, task), HttpStatus.OK);
-//    }
-
     @PutMapping("/{id}")
     public ResponseEntity<Note> updateNote(@PathVariable("id") String id, @RequestBody Note note) {
         return new ResponseEntity<Note>(noteService.updateNote(id, note), HttpStatus.OK);
     }
 
-//    @DeleteMapping("/{id}")
-//    public ResponseEntity<String> deleteTask(@PathVariable("id") String id) {
-//        taskService.deleteTask(id);
-//        return new ResponseEntity<String>("Task deleted successfully", HttpStatus.OK);
-//    }
+    // @DeleteMapping("/{id}")
+    // public ResponseEntity<String> deleteTask(@PathVariable("id") String id) {
+    // taskService.deleteTask(id);
+    // return new ResponseEntity<String>("Task deleted successfully",
+    // HttpStatus.OK);
+    // }
 }

@@ -1,10 +1,8 @@
 package com.freskotek.taskmgnt.controller;
 
-import com.freskotek.taskmgnt.model.Board;
-import com.freskotek.taskmgnt.model.SearchResult;
-import com.freskotek.taskmgnt.model.Task;
-import com.freskotek.taskmgnt.model.Workspace;
+import com.freskotek.taskmgnt.model.*;
 import com.freskotek.taskmgnt.repository.BoardRepository;
+import com.freskotek.taskmgnt.repository.NoteRepository;
 import com.freskotek.taskmgnt.repository.TaskRepository;
 import com.freskotek.taskmgnt.repository.WorkspaceRepository;
 import lombok.AllArgsConstructor;
@@ -24,6 +22,8 @@ public class SearchController {
     @Autowired
     private final TaskRepository taskRepository;
     @Autowired
+    private final NoteRepository noteRepository;
+    @Autowired
     private  final BoardRepository boardRepository;
     @Autowired
     private final WorkspaceRepository workspaceRepository;
@@ -41,6 +41,18 @@ public class SearchController {
             result.setId(task.getId());
             result.setName(task.getTitle());
             result.setUrl("/tasks/" + task.getId());
+            results.add(result);
+        }
+
+        // Search for matching notes
+        List<Note> notes = noteRepository.findByTitleContainingIgnoreCaseAndUserId(query, userId);
+
+        for (Note note : notes) {
+            SearchResult result = new SearchResult();
+            result.setType("note");
+            result.setId(note.getId());
+            result.setName(note.getTitle());
+            result.setUrl("/notes/" + note.getId());
             results.add(result);
         }
 

@@ -8,7 +8,11 @@ import org.springframework.data.mongodb.repository.MongoRepository;
 import java.util.List;
 
 public interface NoteRepository extends MongoRepository<Note, String> {
-    List<Note> findByUserId(String userId, Pageable pageable);
-    Note getNoteByWorkspaceId(String workspaceId);
+    List<Note> findByUserId(String userId);
+
+    List<Note> getNotesByWorkspaceId(String workspaceId);
+
+    List<Note> getNotesByWorkspaceIdOrderByUpdatedAtDesc(String workspaceId);
+
     List<Note> findByTitleContainingIgnoreCaseAndUserId(String title, String userId);
 }

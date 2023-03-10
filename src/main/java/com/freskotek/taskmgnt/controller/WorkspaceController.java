@@ -1,6 +1,5 @@
 package com.freskotek.taskmgnt.controller;
 
-import com.freskotek.taskmgnt.model.Note;
 import com.freskotek.taskmgnt.model.Workspace;
 import com.freskotek.taskmgnt.service.NoteService;
 import com.freskotek.taskmgnt.service.WorkspaceService;
@@ -36,12 +35,6 @@ public class WorkspaceController {
 
     @PostMapping
     public ResponseEntity<Workspace> createWorkspace(@RequestBody Workspace workspace) {
-//        Note newNote = new Note();
-//        newNote.setTitle("Note Title");
-//        newNote.setContent("");
-//        newNote.setUserId(workspace.getUserId());
-//        newNote.setWorkspaceId(workspace);
-//        noteService.createNote()
         return new ResponseEntity<Workspace>(workspaceService.createWorkspace(workspace), HttpStatus.CREATED);
     }
 

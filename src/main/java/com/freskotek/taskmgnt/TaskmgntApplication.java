@@ -16,11 +16,22 @@ public class TaskmgntApplication {
 	}
 
 	/*
-	Defined this here to handle this route alone.
-	Any other route with a parameter will be defined like this
+	 * Defined this here to handle this route alone.
+	 * Any other route with a parameter will be defined like this
 	 */
 	@GetMapping("/workspace/{space_id}")
 	public String workspace(@PathVariable("space_id") String space_id) {
+		return "forward:/";
+	}
+
+	@GetMapping("/workspace/{space_id}/notes")
+	public String workspaceNotes(@PathVariable("space_id") String space_id) {
+		return "forward:/";
+	}
+
+	@GetMapping("/workspace/{space_id}/notes/{note_id}")
+	public String workspaceNoteDetails(@PathVariable("space_id") String space_id,
+			@PathVariable("note_id") String note_id) {
 		return "forward:/";
 	}
 
