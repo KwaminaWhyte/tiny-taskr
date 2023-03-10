@@ -1,6 +1,8 @@
 package com.freskotek.taskmgnt.controller;
 
+import com.freskotek.taskmgnt.model.Note;
 import com.freskotek.taskmgnt.model.Workspace;
+import com.freskotek.taskmgnt.service.NoteService;
 import com.freskotek.taskmgnt.service.WorkspaceService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -15,6 +17,7 @@ import java.util.List;
 public class WorkspaceController {
     @Autowired
     private WorkspaceService workspaceService;
+    private NoteService noteService;
 
     @GetMapping
     public ResponseEntity<List<Workspace>> getAllWorkspaces() {
@@ -33,6 +36,12 @@ public class WorkspaceController {
 
     @PostMapping
     public ResponseEntity<Workspace> createWorkspace(@RequestBody Workspace workspace) {
+//        Note newNote = new Note();
+//        newNote.setTitle("Note Title");
+//        newNote.setContent("");
+//        newNote.setUserId(workspace.getUserId());
+//        newNote.setWorkspaceId(workspace);
+//        noteService.createNote()
         return new ResponseEntity<Workspace>(workspaceService.createWorkspace(workspace), HttpStatus.CREATED);
     }
 
