@@ -33,18 +33,13 @@ public class TaskController {
         return new ResponseEntity<Task>(taskService.getTaskById(id), HttpStatus.OK);
     }
 
-    // @GetMapping("/user/{userId}")
-    // public ResponseEntity<List<Task>> getTasksByUserId(@PathVariable("userId")
-    // String userId) {
-    // return new ResponseEntity<List<Task>>(taskService.getTasksByUserId(userId),
-    // HttpStatus.OK);
-    // }
-
     @PostMapping
     public ResponseEntity<Task> createTask(@RequestBody Task task) {
+        if (task.getTitle() == null || task.getTitle().trim().isEmpty()) {
+            return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+        }
         return new ResponseEntity<Task>(taskService.createTask(task), HttpStatus.CREATED);
     }
-
 
     @PutMapping("/move/{id}")
     public ResponseEntity<Task> moveTask(@PathVariable("id") String id, @RequestBody Task task) {
@@ -53,7 +48,9 @@ public class TaskController {
 
     @PutMapping("/{id}")
     public ResponseEntity<Task> updateTask(@PathVariable("id") String id, @RequestBody Task task) {
-        System.out.println("updating task...");
+        if (task.getTitle() == null || task.getTitle().trim().isEmpty()) {
+            return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+        }
         return new ResponseEntity<Task>(taskService.updateTask(id, task), HttpStatus.OK);
     }
 

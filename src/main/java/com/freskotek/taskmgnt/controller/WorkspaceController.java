@@ -35,11 +35,17 @@ public class WorkspaceController {
 
     @PostMapping
     public ResponseEntity<Workspace> createWorkspace(@RequestBody Workspace workspace) {
+        if (workspace.getName() == null || workspace.getName().trim().isEmpty()) {
+            return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+        }
         return new ResponseEntity<Workspace>(workspaceService.createWorkspace(workspace), HttpStatus.CREATED);
     }
 
     @PutMapping("/{id}")
     public ResponseEntity<Workspace> updateWorkspace(@PathVariable("id") String id, @RequestBody Workspace workspace) {
+        if (workspace.getName() == null || workspace.getName().trim().isEmpty()) {
+            return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+        }
         return new ResponseEntity<Workspace>(workspaceService.updateWorkspace(id, workspace), HttpStatus.OK);
     }
 

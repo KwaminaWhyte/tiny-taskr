@@ -7,6 +7,7 @@ import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
+import java.util.Date;
 import java.util.List;
 
 @Service
@@ -28,18 +29,17 @@ public class TaskService {
     }
 
     public Task createTask(Task task) {
+        task.setCreatedAt(new Date());
+        task.setUpdatedAt(new Date());
         return taskRepository.save(task);
     }
-
-    // public List<Task> getTasksByBoardId(String boardId) {
-    // return taskRepository.findByWorkspaceId(boardId);
-    // }
 
     public Task updateTask(String id, Task task) {
         Task taskToUpdate = taskRepository.findById(id).get();
         taskToUpdate.setTitle(task.getTitle());
         taskToUpdate.setDescription(task.getDescription());
-        taskToUpdate.setBoardId(task.getBoardId());
+        taskToUpdate.setDueDate(task.getDueDate());
+        taskToUpdate.setUpdatedAt(new Date());
         return taskRepository.save(taskToUpdate);
     }
 

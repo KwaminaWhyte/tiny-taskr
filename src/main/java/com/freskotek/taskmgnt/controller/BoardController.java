@@ -47,6 +47,9 @@ public class BoardController {
 
     @PutMapping("/{id}")
     public ResponseEntity<Board> updateBoard(@PathVariable("id") String id, @RequestBody Board board) {
+        if (board.getName() == null || board.getName().trim().isEmpty()) {
+            return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+        }
         return new ResponseEntity<Board>(boardService.updateBoard(id, board), HttpStatus.OK);
     }
 

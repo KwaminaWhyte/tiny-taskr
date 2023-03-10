@@ -19,7 +19,7 @@ public class NoteService {
 
     public List<Note> allUserNotes(String userId) {
 //        Pageable pageable = PageRequest.of(0, limit);
-        return noteRepository.findByUserId(userId);
+        return noteRepository.findByUserIdOrderByUpdatedAtDesc(userId);
     }
 
     public Note getNoteById(String id) {
@@ -41,6 +41,7 @@ public class NoteService {
         noteToUpdate.setTitle(note.getTitle());
         noteToUpdate.setContent(note.getContent());
         noteToUpdate.setUpdatedAt(new Date());
+        noteToUpdate.setColor(note.getColor());
         return noteRepository.save(noteToUpdate);
     }
 
