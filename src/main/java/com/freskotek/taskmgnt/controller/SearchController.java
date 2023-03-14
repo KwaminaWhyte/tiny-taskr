@@ -1,10 +1,7 @@
 package com.freskotek.taskmgnt.controller;
 
 import com.freskotek.taskmgnt.model.*;
-import com.freskotek.taskmgnt.repository.BoardRepository;
-import com.freskotek.taskmgnt.repository.NoteRepository;
-import com.freskotek.taskmgnt.repository.TaskRepository;
-import com.freskotek.taskmgnt.repository.WorkspaceRepository;
+import com.freskotek.taskmgnt.repository.*;
 import lombok.AllArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -26,6 +23,8 @@ public class SearchController {
     @Autowired
     private  final BoardRepository boardRepository;
     @Autowired
+    private  final FileRepository fileRepository;
+    @Autowired
     private final WorkspaceRepository workspaceRepository;
     @GetMapping
     public ResponseEntity<List<SearchResult>> search(@RequestParam("query") String query,
@@ -34,7 +33,6 @@ public class SearchController {
 
         // Search for matching tasks
         List<Task> tasks = taskRepository.findByTitleContainingIgnoreCaseAndUserId(query, userId);
-
         for (Task task : tasks) {
             SearchResult result = new SearchResult();
             result.setType("task");
@@ -44,9 +42,19 @@ public class SearchController {
             results.add(result);
         }
 
+        // Search for matching files
+        List<File> files = fileRepository.findByNameContainingIgnoreCaseAndUserId(query, userId);
+        for (File file : files) {
+            SearchResult result = new SearchResult();
+            result.setType("file");
+            result.setId(file.getId());
+            result.setName(file.getName());
+            result.setUrl("/notes/" + file.getNoteId() + "?file=" + file.getId());
+            results.add(result);
+        }
+
         // Search for matching notes
         List<Note> notes = noteRepository.findByTitleContainingIgnoreCaseAndUserId(query, userId);
-
         for (Note note : notes) {
             SearchResult result = new SearchResult();
             result.setType("note");

@@ -18,6 +18,7 @@ public class Note {
     @Id
     private String id;
     private String title;
+    private String description;
     private String content;
     private String userId;
     private String workspaceId;

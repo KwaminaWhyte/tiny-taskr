@@ -23,7 +23,7 @@ public class FileService {
         return fileRepository.findByNoteIdOrderByUpdatedAtDesc(noteId);
     }
 
-    public List<File> allUserNotes(String userId) {
+    public List<File> allUserFiles(String userId) {
         return fileRepository.findByUserIdOrderByUpdatedAtDesc(userId);
     }
 

@@ -24,6 +24,11 @@ public class TaskmgntApplication {
 		return "forward:/";
 	}
 
+	@GetMapping("/notes/{note_id}")
+	public String notes(@PathVariable("note_id") String note_id) {
+		return "forward:/";
+	}
+
 	@GetMapping("/workspace/{space_id}/notes")
 	public String workspaceNotes(@PathVariable("space_id") String space_id) {
 		return "forward:/";

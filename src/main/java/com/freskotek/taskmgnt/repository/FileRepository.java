@@ -14,4 +14,7 @@ public interface FileRepository extends MongoRepository<File, String> {
     List<File> getFileByWorkspaceId(String workspaceId);
 
     List<File> getFileByWorkspaceIdOrderByUpdatedAtDesc(String workspaceId);
+
+    List<File> findByNameContainingIgnoreCaseAndUserId(String title, String userId);
+
 }

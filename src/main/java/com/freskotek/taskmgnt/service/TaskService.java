@@ -21,7 +21,7 @@ public class TaskService {
 
     public List<Task> allUserTasks(String userId, int limit) {
         Pageable pageable = PageRequest.of(0, limit);
-        return taskRepository.findByUserId(userId, pageable);
+        return taskRepository.findByUserIdOrderByDueDate(userId, pageable);
     }
 
     public Task getTaskById(String id) {
@@ -40,6 +40,12 @@ public class TaskService {
         taskToUpdate.setDescription(task.getDescription());
         taskToUpdate.setDueDate(task.getDueDate());
         taskToUpdate.setUpdatedAt(new Date());
+        return taskRepository.save(taskToUpdate);
+    }
+
+    public Task markDone(String id) {
+        Task taskToUpdate = taskRepository.findById(id).get();
+        taskToUpdate.setDone(true);
         return taskRepository.save(taskToUpdate);
     }
 

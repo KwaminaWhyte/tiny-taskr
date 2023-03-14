@@ -39,6 +39,7 @@ public class NoteService {
     public Note updateNote(String id, Note note) {
         Note noteToUpdate = noteRepository.findById(id).get();
         noteToUpdate.setTitle(note.getTitle());
+        noteToUpdate.setDescription(note.getDescription());
         noteToUpdate.setContent(note.getContent());
         noteToUpdate.setUpdatedAt(new Date());
         noteToUpdate.setColor(note.getColor());

@@ -41,8 +41,8 @@ public class FileController {
     }
 
     @GetMapping("user/{user_id}")
-    public ResponseEntity<List<File>> getAllUserNotes(@PathVariable("user_id") String user_id) {
-        return new ResponseEntity<List<File>>(fileService.allUserNotes(user_id), HttpStatus.OK);
+    public ResponseEntity<List<File>> getAllUserFiles(@PathVariable("user_id") String user_id) {
+        return new ResponseEntity<List<File>>(fileService.allUserFiles(user_id), HttpStatus.OK);
     }
 
     @GetMapping("/{id}")
