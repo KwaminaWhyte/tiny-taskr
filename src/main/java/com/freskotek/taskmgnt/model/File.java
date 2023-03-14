@@ -10,20 +10,20 @@ import org.springframework.data.mongodb.core.mapping.Document;
 
 import java.util.Date;
 
-@Document(collection = "tasks")
+@Document(collection = "files")
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-public class Task {
+public class File {
     @Id
     private String id;
-    private String title;
-    private String description;
+    private String name;
+    private String type;
+    private Long size;
+    private String url;
     private String userId;
-    private String boardId;
+    private String noteId;
     private String workspaceId;
-    private boolean done;
-    private String dueDate;
     @CreatedDate
     private Date createdAt;
     @LastModifiedDate

@@ -1,6 +1,8 @@
 package com.freskotek.taskmgnt.service;
 
+import com.freskotek.taskmgnt.model.File;
 import com.freskotek.taskmgnt.model.Note;
+import com.freskotek.taskmgnt.repository.FileRepository;
 import com.freskotek.taskmgnt.repository.NoteRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -9,43 +11,40 @@ import java.util.Date;
 import java.util.List;
 
 @Service
-public class NoteService {
+public class FileService {
     @Autowired
-    private NoteRepository noteRepository;
+    private FileRepository fileRepository;
 
-    public List<Note> allNotes() {
-        return noteRepository.findAll();
+    public List<File> allNotes() {
+        return fileRepository.findAll();
     }
 
-    public List<Note> allUserNotes(String userId) {
-//        Pageable pageable = PageRequest.of(0, limit);
-        return noteRepository.findByUserIdOrderByUpdatedAtDesc(userId);
+    public List<File> allNotesFiles(String noteId ){
+        return fileRepository.findByNoteIdOrderByUpdatedAtDesc(noteId);
     }
 
-    public Note getNoteById(String id) {
-        return noteRepository.findById(id).get();
+    public List<File> allUserNotes(String userId) {
+        return fileRepository.findByUserIdOrderByUpdatedAtDesc(userId);
     }
 
-    public List<Note> getNotesByWorkspaceId(String id) {
-        return noteRepository.getNotesByWorkspaceIdOrderByUpdatedAtDesc(id);
+    public File getFileById(String id) {
+        return fileRepository.findById(id).get();
     }
 
-    public Note createNote(Note note) {
+
+    public File createNote(File note) {
         note.setCreatedAt(new Date());
         note.setUpdatedAt(new Date());
-        return noteRepository.save(note);
+        return fileRepository.save(note);
     }
 
-    public Note updateNote(String id, Note note) {
-        Note noteToUpdate = noteRepository.findById(id).get();
-        noteToUpdate.setTitle(note.getTitle());
-        noteToUpdate.setContent(note.getContent());
+    public File updateNote(String id, File note) {
+        File noteToUpdate = fileRepository.findById(id).get();
         noteToUpdate.setUpdatedAt(new Date());
-        noteToUpdate.setColor(note.getColor());
-        return noteRepository.save(noteToUpdate);
+        return fileRepository.save(noteToUpdate);
     }
 
     public void deleteTask(String id) {
-        noteRepository.deleteById(id);
+        fileRepository.deleteById(id);
     }
 }

@@ -5,6 +5,7 @@ import com.cloudinary.utils.ObjectUtils;
 import com.freskotek.taskmgnt.model.File;
 import com.freskotek.taskmgnt.model.Note;
 import com.freskotek.taskmgnt.repository.FileRepository;
+import com.freskotek.taskmgnt.service.FileService;
 import com.freskotek.taskmgnt.service.NoteService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -19,82 +20,44 @@ import java.util.List;
 import java.util.Map;
 
 @RestController
-@RequestMapping("/api/notes")
+@RequestMapping("/api/files")
 @CrossOrigin(origins = "*")
-public class NoteController {
-    @Autowired
-    private NoteService noteService;
-    @Autowired
-    private Cloudinary cloudinary;
+public class FileController {
+
     @Autowired
     private FileRepository fileRepository;
+    @Autowired
+    private FileService fileService;
 
     @GetMapping
-    public ResponseEntity<List<Note>> getAllNotes() {
+    public ResponseEntity<List<File>> getAllFiles() {
         System.out.println(LocalDateTime.now());
-        return new ResponseEntity<List<Note>>(noteService.allNotes(), HttpStatus.OK);
+        return new ResponseEntity<List<File>>(fileService.allNotes(), HttpStatus.OK);
+    }
+
+    @GetMapping("note/{note_id}")
+    public ResponseEntity<List<File>> getAllNotesFiles(@PathVariable("note_id") String note_id) {
+        return new ResponseEntity<List<File>>(fileService.allNotesFiles(note_id), HttpStatus.OK);
     }
 
     @GetMapping("user/{user_id}")
-    public ResponseEntity<List<Note>> getAllUserNotes(@PathVariable("user_id") String user_id) {
-        return new ResponseEntity<List<Note>>(noteService.allUserNotes(user_id), HttpStatus.OK);
+    public ResponseEntity<List<File>> getAllUserNotes(@PathVariable("user_id") String user_id) {
+        return new ResponseEntity<List<File>>(fileService.allUserNotes(user_id), HttpStatus.OK);
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<Note> getNoteById(@PathVariable("id") String id) {
-        return new ResponseEntity<Note>(noteService.getNoteById(id), HttpStatus.OK);
-    }
-
-    @GetMapping("/workspace/{id}")
-    public ResponseEntity<List<Note>> getNotesByWorkspaceId(@PathVariable("id") String id) {
-        return new ResponseEntity<List<Note>>(noteService.getNotesByWorkspaceId(id), HttpStatus.OK);
+    public ResponseEntity<File> getNoteById(@PathVariable("id") String id) {
+        return new ResponseEntity<File>(fileService.getFileById(id), HttpStatus.OK);
     }
 
     @PostMapping
-    public ResponseEntity<Note> createNote(@RequestBody Note note) {
-        return new ResponseEntity<Note>(noteService.createNote(note), HttpStatus.CREATED);
+    public ResponseEntity<File> createNote(@RequestBody File note) {
+        return new ResponseEntity<File>(fileService.createNote(note), HttpStatus.CREATED);
     }
 
     @PutMapping("/{id}")
-    public ResponseEntity<Note> updateNote(@PathVariable("id") String id, @RequestBody Note note) {
-        return new ResponseEntity<Note>(noteService.updateNote(id, note), HttpStatus.OK);
+    public ResponseEntity<File> updateNote(@PathVariable("id") String id, @RequestBody File note) {
+        return new ResponseEntity<File>(fileService.updateNote(id, note), HttpStatus.OK);
     }
 
-//    upload file to note
-    @PostMapping(path = "/file/upload_file", consumes = "multipart/form-data")
-    public ResponseEntity<File> uploadFile(@RequestParam("file") MultipartFile file,
-                                           @RequestParam String userId,
-                                           @RequestParam String workspaceId,
-                                           @RequestParam String noteId ) throws IOException {
-        System.out.println("upload file");
-        if (!file.isEmpty()) {
-            Map uploadResult = cloudinary.uploader().upload(file.getBytes(), ObjectUtils.asMap("resource_type", "auto"));
-            String publicId = (String) uploadResult.get("public_id");
-            String cloudinaryUrl = cloudinary.url().format("*").generate(publicId);
-
-            File fileUpload = new File();
-
-            fileUpload.setUrl(cloudinaryUrl);
-            fileUpload.setName(file.getOriginalFilename());
-            fileUpload.setType(file.getContentType());
-            fileUpload.setSize(file.getSize());
-            fileUpload.setUserId(userId);
-            fileUpload.setWorkspaceId(workspaceId);
-            fileUpload.setNoteId(noteId);
-            fileUpload.setCreatedAt(new Date());
-            fileUpload.setUpdatedAt(new Date());
-
-            return new ResponseEntity<File>(fileRepository.save(fileUpload), HttpStatus.OK);
-
-        } else {
-            System.out.println("error uploading file");
-            return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
-        }
-    }
-    // @DeleteMapping("/{id}")
-    // public ResponseEntity<String> deleteTask(@PathVariable("id") String id) {
-    // taskService.deleteTask(id);
-    // return new ResponseEntity<String>("Task deleted successfully",
-    // HttpStatus.OK);
-    // }
 }

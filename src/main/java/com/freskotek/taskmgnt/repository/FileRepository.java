@@ -1,18 +1,17 @@
 package com.freskotek.taskmgnt.repository;
 
+import com.freskotek.taskmgnt.model.File;
 import com.freskotek.taskmgnt.model.Note;
-import com.freskotek.taskmgnt.model.Task;
-import org.springframework.data.domain.Pageable;
 import org.springframework.data.mongodb.repository.MongoRepository;
 
 import java.util.List;
 
-public interface NoteRepository extends MongoRepository<Note, String> {
-    List<Note> findByUserIdOrderByUpdatedAtDesc(String userId);
+public interface FileRepository extends MongoRepository<File, String> {
+    List<File> findByNoteIdOrderByUpdatedAtDesc(String noteId);
 
-    List<Note> getNotesByWorkspaceId(String workspaceId);
+    List<File> findByUserIdOrderByUpdatedAtDesc(String userId);
 
-    List<Note> getNotesByWorkspaceIdOrderByUpdatedAtDesc(String workspaceId);
+    List<File> getFileByWorkspaceId(String workspaceId);
 
-    List<Note> findByTitleContainingIgnoreCaseAndUserId(String title, String userId);
+    List<File> getFileByWorkspaceIdOrderByUpdatedAtDesc(String workspaceId);
 }
