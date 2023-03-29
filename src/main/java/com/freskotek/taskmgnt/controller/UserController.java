@@ -35,9 +35,9 @@ public class UserController {
 
     @PostMapping("/login")
     public ResponseEntity<Object> login(@RequestBody User user) {
-        System.out.println("login called...");
         if (!userService.validateUser(user.getUsername(), user.getPassword())) {
-            return ResponseEntity.status(HttpStatus.UNAUTHORIZED).build();
+//            return ResponseEntity.status(HttpStatus.UNAUTHORIZED).build();
+            return ResponseEntity.badRequest().body("Invalid Credentials!");
         }
 
         // Generate token and return it to the client
@@ -48,16 +48,19 @@ public class UserController {
     }
 
     @PostMapping("/register")
-    public ResponseEntity<String> register(@RequestBody User user, BindingResult result) {
+    public ResponseEntity<Object> register(@RequestBody User user, BindingResult result) {
         if (result.hasErrors()) {
             return ResponseEntity.badRequest().body(result.getAllErrors().toString());
         }
 
         boolean success = userService.register(user.getUsername(), user.getEmail(), user.getPassword());
         if (success) {
-            return ResponseEntity.ok("User registered successfully.");
+            User currentUser = userService.getUserByUsername(user.getUsername());
+            String token = userService.generateToken(user.getUsername());
+
+            return ResponseEntity.ok(new LoginResponse(token, currentUser));
         } else {
-            return ResponseEntity.badRequest().body("Username or email already exists.");
+            return ResponseEntity.badRequest().body("Username or email field is empty.");
         }
     }
 

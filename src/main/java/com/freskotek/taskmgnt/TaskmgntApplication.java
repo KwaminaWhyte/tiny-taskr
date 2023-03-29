@@ -35,8 +35,7 @@ public class TaskmgntApplication {
 	}
 
 	@GetMapping("/workspace/{space_id}/notes/{note_id}")
-	public String workspaceNoteDetails(@PathVariable("space_id") String space_id,
-			@PathVariable("note_id") String note_id) {
+	public String workspaceNoteDetails(@PathVariable("space_id") String space_id, @PathVariable("note_id") String note_id) {
 		return "forward:/";
 	}
 
