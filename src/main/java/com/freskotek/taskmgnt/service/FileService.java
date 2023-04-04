@@ -15,7 +15,7 @@ public class FileService {
     @Autowired
     private FileRepository fileRepository;
 
-    public List<File> allNotes() {
+    public List<File> allFiles() {
         return fileRepository.findAll();
     }
 
@@ -32,7 +32,7 @@ public class FileService {
     }
 
 
-    public File createNote(File note) {
+    public File createFile(File note) {
         note.setCreatedAt(new Date());
         note.setUpdatedAt(new Date());
         return fileRepository.save(note);

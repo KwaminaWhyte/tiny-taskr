@@ -32,7 +32,7 @@ public class FileController {
     @GetMapping
     public ResponseEntity<List<File>> getAllFiles() {
         System.out.println(LocalDateTime.now());
-        return new ResponseEntity<List<File>>(fileService.allNotes(), HttpStatus.OK);
+        return new ResponseEntity<List<File>>(fileService.allFiles(), HttpStatus.OK);
     }
 
     @GetMapping("note/{note_id}")
@@ -46,13 +46,13 @@ public class FileController {
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<File> getNoteById(@PathVariable("id") String id) {
+    public ResponseEntity<File> geFileById(@PathVariable("id") String id) {
         return new ResponseEntity<File>(fileService.getFileById(id), HttpStatus.OK);
     }
 
     @PostMapping
-    public ResponseEntity<File> createNote(@RequestBody File note) {
-        return new ResponseEntity<File>(fileService.createNote(note), HttpStatus.CREATED);
+    public ResponseEntity<File> createFile(@RequestBody File note) {
+        return new ResponseEntity<File>(fileService.createFile(note), HttpStatus.CREATED);
     }
 
     @PutMapping("/{id}")
